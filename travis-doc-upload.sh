@@ -5,7 +5,7 @@
 
 set -e
 
-. ./scripts/travis-doc-upload.cfg
+. ./.travis/travis-doc-upload.cfg
 
 [ "$TRAVIS_BRANCH" = master ]
 
@@ -19,7 +19,7 @@ eval key=\$encrypted_${SSH_KEY_TRAVIS_ID}_key
 eval iv=\$encrypted_${SSH_KEY_TRAVIS_ID}_iv
 
 mkdir -p ~/.ssh
-openssl aes-256-cbc -K $key -iv $iv -in scripts/id_ed25519.enc -out ~/.ssh/id_ed25519 -d
+openssl aes-256-cbc -K $key -iv $iv -in .travis/id_ed25519.enc -out ~/.ssh/id_ed25519 -d
 chmod 600 ~/.ssh/id_ed25519
 
 git clone --branch gh-pages git@github.com:$DOCS_REPO deploy_docs
