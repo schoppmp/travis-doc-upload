@@ -28,17 +28,17 @@ So, this is what I did:
 
 ### Step 1
 
-Run this command in a directory named `scripts` in your Rust project:
+Run this command in a directory named `.travis` in your Rust project:
 
 ```
-travis encrypt-file ~/path-to-docs-key/.../id_rsa
+travis encrypt-file ~/path-to-docs-key/.../id_ed25519
 ```
 
 Travis will guess your repo's name on GitHub. Make sure this is correct, especially if your repo is
 owned by an organization!
 
-This command should create `id_rsa.enc` inside `scripts`. Check this file
-into Git; *do not* check in `id_rsa`! Keeping it outside the source tree, as
+This command should create `id_ed25519.enc` inside `.travis`. Check this file
+into Git; *do not* check in `id_ed25519`! Keeping it outside the source tree, as
 illustrated above, is safest.
 
 The command will also print an instruction like
@@ -53,12 +53,12 @@ You don't need to do this. Just save the hex ID of the file, which in the above 
 
 ### Step 2
 
-Also in `scripts`, create a file [`travis-doc-upload.cfg`](https://github.com/kmcallister/futf/blob/master/scripts/travis-doc-upload.cfg) similar to the following:
+Also in `.travis`, create a file [`travis-doc-upload.cfg`](https://github.com/schoppmp/schoppmp/oblivc-rust/blob/master/.travis/travis-doc-upload.cfg) similar to the following:
 
 ```
-PROJECT_NAME=futf
-DOCS_REPO=kmcallister/docs.git
-SSH_KEY_TRAVIS_ID=0a6446eb3ae3
+PROJECT_NAME=oblivc-rust
+DOCS_REPO=schoppmp/doc.git
+SSH_KEY_TRAVIS_ID=e61c735bb301
 ```
 
 `PROJECT_NAME` is a subdirectory in your docs repo, which is identified by `DOCS_REPO`.
@@ -69,7 +69,7 @@ SSH_KEY_TRAVIS_ID=0a6446eb3ae3
 Add this line to your `.travis.yml`:
 
 ```
-after_success: curl https://raw.githubusercontent.com/kmcallister/travis-doc-upload/master/travis-doc-upload.sh | sh
+after_success: curl https://raw.githubusercontent.com/schoppmp/travis-doc-upload/master/travis-doc-upload.sh | sh
 ```
 
 You can also host the script yourself, or check it into your repository. I'm not making any hard guarantees about backwards compatibility of my hosted version, although I'll try to avoid egregious breakage.
@@ -86,7 +86,7 @@ https://[username].github.io/[doc repo name]/[project name]/[crate name]/index.h
 
 "[project name]" is the `PROJECT_NAME` you defined in the config file, and "[crate name]" is a directory created by `rustdoc` — a single `rustdoc` invocation can generate docs for many crates.
 
-See for example [`https://kmcallister.github.io/docs/futf/futf/index.html`](https://kmcallister.github.io/docs/futf/futf/index.html).
+See for example [`https://schoppmp.github.io/doc/oblivc-rust/oblivc/index.html`](https://schoppmp.github.io/doc/oblivc-rust/oblivc/index.html).
 
 ## Caveats
 
