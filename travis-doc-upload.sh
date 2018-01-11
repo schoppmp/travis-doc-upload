@@ -11,6 +11,8 @@ set -e
 
 [ "$TRAVIS_PULL_REQUEST" = false ]
 
+[ "$TRAVIS_RUST_VERSION" = stable ]
+
 [ -e target/doc ]
 
 eval key=\$encrypted_${SSH_KEY_TRAVIS_ID}_key
